@@ -1,0 +1,41 @@
+.DS_Store
+.idea/shelf
+*.iml
+/dependencies/all
+dist
+out
+tmp
+workspace.xml
+*.versionsBackup
+
+local.properties
+.gradle
+build
+
+# test suit products.
+*.bc
+*.bc.o
+*.kt.S
+*.kt.exe
+*.log
+test.output
+*.kexe
+
+# Ignore Gradle GUI config
+gradle-app.setting
+
+# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
+!gradle-wrapper.jar
+
+# Cache of project
+.gradletasknamecache
+
+# local project files
+lib/
+.idea/
+cmake-build-debug/
+CMakeList.txt
+gradle-4.6/
+gradle/
+gradlew
+gradlew.bat

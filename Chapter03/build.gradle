@@ -1,0 +1,54 @@
+buildscript {
+    repositories {
+        jcenter()
+        mavenCentral()
+        google()
+        maven {
+            url "https://dl.bintray.com/jetbrains/kotlin-native-dependencies"
+        }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-native-gradle-plugin:0.6.2"
+        classpath "com.android.tools.build:gradle:3.0.1"
+    }
+}
+
+repositories {
+    jcenter()
+}
+
+apply plugin: 'konan'
+apply plugin: 'com.android.application'
+
+konan.targets = ['android_arm32', 'android_arm64']
+
+def platforms = [
+        "armeabi-v7a": [konanTarget: "android_arm32"],
+        "arm64-v8a"  : [konanTarget: "android_arm64"]
+]
+
+konanArtifacts {
+  program ('handson') {
+      artifactName 'libhandson'
+  }
+}
+
+android {
+    compileSdkVersion 25
+
+    defaultConfig {
+        applicationId 'com.example.handson'
+        minSdkVersion 9
+        targetSdkVersion 25
+
+        ndk {
+            abiFilters "armeabi-v7a", "arm64-v8a"
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDir libsDir
+        }
+    }
+}
