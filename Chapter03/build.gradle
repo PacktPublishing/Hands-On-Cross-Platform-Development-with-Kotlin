@@ -1,4 +1,5 @@
 buildscript {
+    ext.kotlin_version = '1.2.41'
     repositories {
         jcenter()
         mavenCentral()
@@ -8,8 +9,9 @@ buildscript {
         }
     }
     dependencies {
+        classpath "com.android.tools.build:gradle:3.1.2"
         classpath "org.jetbrains.kotlin:kotlin-native-gradle-plugin:0.6.2"
-        classpath "com.android.tools.build:gradle:3.0.1"
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
@@ -22,15 +24,39 @@ apply plugin: 'com.android.application'
 
 konan.targets = ['android_arm32', 'android_arm64']
 
+def outDir = file('handson')
+def libsDir = file("$outDir/libs")
+
 def platforms = [
         "armeabi-v7a": [konanTarget: "android_arm32"],
         "arm64-v8a"  : [konanTarget: "android_arm64"]
 ]
 
 konanArtifacts {
-  program ('handson') {
-      artifactName 'libhandson'
-  }
+    program('handson') {
+        artifactName 'libhandson_screen'
+    }
+}
+
+task copyLibs(type: Copy) {
+    dependsOn konanArtifacts.handson
+    destinationDir libsDir
+
+    platforms.each { name, platform ->
+        into(name) {
+            from konanArtifacts.handson."${platform.konanTarget}".artifact
+        }
+    }
+}
+
+task deleteOut(type: Delete) {
+    delete outDir
+}
+
+clean.dependsOn deleteOut
+
+tasks.matching { it.name == 'preBuild' }.all {
+    it.dependsOn copyLibs
 }
 
 android {
@@ -50,5 +76,12 @@ android {
         main {
             jniLibs.srcDir libsDir
         }
+        main.java.srcDirs += 'src/main/kotlin'
     }
+}
+
+task buildApk(type: Copy) {
+    dependsOn "assembleDebug"
+    destinationDir outDir
+    from 'build/outputs/apk'
 }

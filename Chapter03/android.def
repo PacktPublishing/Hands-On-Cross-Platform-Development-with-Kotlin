@@ -1,0 +1,7 @@
+headers = stdio.h stdlib.h string.h math.h time.h android/log.h androidLauncher.h EGL/egl.h GLES/gl.h
+linkerOpst = -landroid -lEGL -lGLESv1_CM -lz
+---
+
+static int interop_errno() {
+	return errno;
+}
