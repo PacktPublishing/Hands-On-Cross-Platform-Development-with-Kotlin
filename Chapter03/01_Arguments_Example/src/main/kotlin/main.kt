@@ -1,3 +1,5 @@
 fun main(args: Array<String>) {
-    println("Hello, Native World!")
+    args.forEach { it ->
+        print("Argument: $it")
+    }
 }
