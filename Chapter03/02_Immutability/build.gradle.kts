@@ -3,5 +3,5 @@ plugins {
 }
         
 konanArtifacts {
-    program("02_Memory")
+    program("02_Immutability")
 }
