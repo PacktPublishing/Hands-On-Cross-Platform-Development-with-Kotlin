@@ -3,5 +3,5 @@ plugins {
 }
         
 konanArtifacts {
-    program("02_Memmory")
+    program("02_Memory")
 }
