@@ -1,7 +1,7 @@
 import konan.worker.TransferMode
 import konan.worker.startWorker
 
-data class Data(var value: Double)
+data class Data(val value: Double)
 
 fun main(args: Array<String>) {
 
