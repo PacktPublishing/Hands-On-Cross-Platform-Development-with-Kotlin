@@ -1,3 +1,4 @@
+import konan.worker.Future
 import konan.worker.TransferMode
 import konan.worker.startWorker
 import platform.posix.pow
@@ -11,15 +12,22 @@ fun main(args: Array<String>) {
 
     for (x in 0..10) {
         val future = worker.schedule(mode, { Data(x.toDouble()) }) { it ->
-            println("Value: ${it.value}")
             pow(it.value, 2.0)
         }
 
-        future.consume { it ->
-            println("Power: $it\n- - - - - - - - -")
+        printState(future)
+        future.consume {
+            printState(future)
+            println("- - - - - - - - - -")
         }
     }
 
     val processScheduledJobs = true
     worker.requestTermination(processScheduledJobs)
+}
+
+fun printState(future: Future<Double>) {
+    val futureId = future.id
+    val futureState = future.state
+    println("Future: $futureId -> $futureState")
 }
