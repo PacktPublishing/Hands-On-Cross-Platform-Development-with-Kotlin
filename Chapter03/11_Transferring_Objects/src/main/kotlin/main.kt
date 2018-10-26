@@ -1,4 +1,5 @@
 import konan.worker.TransferMode
+import konan.worker.freeze
 import konan.worker.startWorker
 
 data class Data(val value: Double)
@@ -9,6 +10,7 @@ fun main(args: Array<String>) {
     val mode = TransferMode.CHECKED
 
     val data = Data(1000.0)
+    data.freeze()
 
     try {
         worker.schedule(mode, { data }) { it ->
