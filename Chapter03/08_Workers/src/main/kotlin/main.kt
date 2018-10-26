@@ -15,9 +15,11 @@ fun main(args: Array<String>) {
             pow(it.value, 2.0)
         }
 
-        val result = future.result()
-        println("Power: $result\n- - - - - - - - -")
+        future.consume { it ->
+            println("Power: $it\n- - - - - - - - -")
+        }
     }
+
     val processScheduledJobs = true
     worker.requestTermination(processScheduledJobs)
 }
