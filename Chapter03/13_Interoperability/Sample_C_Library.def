@@ -1,0 +1,2 @@
+headers = library.h
+headerFilter = Sample_C_Library/*
