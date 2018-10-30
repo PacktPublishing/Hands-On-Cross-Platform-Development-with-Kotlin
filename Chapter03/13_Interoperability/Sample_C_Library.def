@@ -1,2 +1,2 @@
-headers = library.h
-headerFilter = Sample_C_Library/*
+staticLibraries = libSample_C_Library.a
+libraryPaths = ./cmake-build-debug
